@@ -1,3 +1,3 @@
 export function Header() {
-	return <header className={'p-6'}>Header</header>;
+	return <header className={'w-full p-6'}>Header</header>;
 }
