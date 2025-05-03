@@ -1,4 +1,3 @@
-import { m } from 'framer-motion';
 import { Check, type LucideIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';

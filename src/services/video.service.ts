@@ -1,6 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosResponseHeaders } from 'axios';
+import { AxiosRequestConfig, AxiosResponseHeaders } from 'axios';
 
-import { IChannel } from '@/types/cannel.types';
+
 import { IVideo } from '@/types/video.types';
 import { axiosClassic } from '@/api/axios';
 
