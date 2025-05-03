@@ -1,17 +1,22 @@
 import type { Metadata } from 'next';
 import { Noto_Sans } from 'next/font/google';
 import { ReactNode } from 'react';
+import { Provider } from 'react-redux';
 
 import { Layout } from '@/components/layout/Layout';
 
 import { Providers } from '@/providers/Providers';
 
 import './globals.css';
+import { store } from '@/store';
 
 const notoSans = Noto_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'RED Video',
+	title: {
+		default: 'RED Video',
+		template: `%s | RED Video`,
+	},
 	description: 'App for video watching',
 };
 
