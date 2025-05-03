@@ -11,7 +11,10 @@ import './globals.css';
 const notoSans = Noto_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'RED Video',
+	title: {
+		default: 'RED Video',
+		template: `%s | RED Video`,
+	},
 	description: 'App for video watching',
 };
 

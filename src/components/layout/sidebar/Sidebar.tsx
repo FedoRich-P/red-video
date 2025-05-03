@@ -9,7 +9,7 @@ interface Props {
 
 export function Sidebar({ toggleSidebar }: Props) {
 	return (
-		<aside className="p-6 border-r border-border whitespace-nowrap overflow-hidden">
+		<aside className="p-6 border-r border-[var(--border-color)] mr-3 whitespace-nowrap overflow-hidden">
 			<SidebarHeader toggleSidebar={toggleSidebar} />
 			<SidebarMenu menu={SIDEBAR_DATA} />
 			<SidebarSubscriptions />

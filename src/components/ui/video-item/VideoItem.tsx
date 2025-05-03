@@ -15,17 +15,18 @@ interface Props {
 }
 
 export function VideoItem({ video, Icon }: Props) {
-
 	return (
 		<article className={'p-4 pt-2 flex gap-2 flex-col border-1 border-[var(--border-color)]'}>
 			<div className="relative mb-1.5">
-				<Link href={PAGE.VIDEO(video.slug)}>
+				<Link
+					href={PAGE.VIDEO(video.slug)}
+					className={'h-[140px] w-full'}>
 					<Image
 						src={video.thumbnailUrl}
-						width={250}
-						height={140}
+						width={500}
+						height={500}
 						alt={video?.title || 'Video thumbnail'}
-						className="rounded-md w-full h-full"
+						className="rounded-md w-full h-auto aspect-video object-cover"
 						priority
 					/>
 				</Link>
@@ -37,7 +38,7 @@ export function VideoItem({ video, Icon }: Props) {
 						width={35}
 						height={35}
 						alt={video.channel.name || 'Channel avatar'}
-						className="rounded-full shadow w-9 h-9"
+						className="rounded-full shadow h-auto w-auto aspect-square object-cover"
 					/>
 				</Link>
 			</div>
@@ -45,7 +46,7 @@ export function VideoItem({ video, Icon }: Props) {
 				<div className="flex items-center gap-1">
 					{Icon && (
 						<Icon
-							className="text-red-600"
+							className="text-red-600 w-auto h-auto"
 							size={20}
 						/>
 					)}
@@ -65,10 +66,12 @@ export function VideoItem({ video, Icon }: Props) {
 			<Link
 				href={PAGE.CHANNEL(video.channel.slug)}
 				className="flex items-center justify-end gap-2 pt-1">
-				<Check
-					className="text-green-400"
-					size={17}
-				/>
+				{video.channel.isVerified && (
+					<Check
+						className="text-green-400"
+						size={17}
+					/>
+				)}
 				<span className="text-gray-400 text-sm">{video.channel.user.name}</span>
 			</Link>
 		</article>

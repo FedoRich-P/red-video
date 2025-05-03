@@ -6,7 +6,7 @@ export function Content({ children }: PropsWithChildren<unknown>) {
 	return (
 		<div className={'w-full'}>
 			<Header/>
-			<main className={'p-6 w-full grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3'}>
+			<main className={'p-6 w-full'}>
 				{children}
 			</main>
 		</div>
