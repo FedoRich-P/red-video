@@ -15,13 +15,18 @@ export function SidebarMenu({ menu, title }: Props) {
 		<nav>
 			{title && <div className="opacity-40 uppercase font-medium text-xs mb-3">{title}</div>}
 			<ul>
-				{menu.map((menuItem) => (
-					<MenuItem
-						key={menuItem.label}
-						item={menuItem}
-						isActive={!!match(menuItem.link)(pathname)}
-					/>
-				))}
+				{menu
+					.filter((item) => typeof item.link === 'string')
+					.map((item) => {
+						const isMatched = match(item.link!)(pathname);
+						return (
+							<MenuItem
+								key={item.label}
+								item={item}
+								isActive={!!isMatched}
+							/>
+						);
+					})}
 			</ul>
 		</nav>
 	);
