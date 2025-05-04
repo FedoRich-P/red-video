@@ -15,10 +15,10 @@ type Props = {
 
 export function Providers({ children }: Props) {
 	return (
-		<Provider store={store}>
-			<QueryClientProvider client={client}>
+		<QueryClientProvider client={client}>
+			<Provider store={store}>
 				<LazyMotion features={domAnimation}>{children}</LazyMotion>
-			</QueryClientProvider>
-		</Provider>
+			</Provider>
+		</QueryClientProvider>
 	);
 }
