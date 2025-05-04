@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 
 import { EnumTokens } from '@/types/auth.types'
 import type { IUser } from '@/types/user.types'
+import { RootState } from '@/store/index';
 
 interface IAuthState {
 	user: IUser | null
@@ -41,3 +42,10 @@ export const authSlice = createSlice({
 })
 
 export const { setAuthData, clearAuthData } = authSlice.actions
+
+
+export const authReducer = authSlice.reducer;
+
+export const selectIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;
+export const selectAccessToken = (state: RootState) => state.auth.accessToken
+export const selectUser = (state: RootState) => state.auth.user

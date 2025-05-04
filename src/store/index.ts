@@ -1,16 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit';
 
-import { authSlice } from './auth.slice'
+import { authReducer, authSlice } from './authSlice';
 
 export const store = configureStore({
 	reducer: {
-		auth: authSlice.reducer
-	}
-})
+		[authSlice.name]: authReducer,
+	},
+});
 
-export type TRootState = ReturnType<typeof store.getState>
-export type TAppDispatch = typeof store.dispatch
-
-export const useAppDispatch = () => useDispatch<TAppDispatch>
-export const useTypedSelector: TypedUseSelectorHook<TRootState> = useSelector
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

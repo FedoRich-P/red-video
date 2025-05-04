@@ -9,7 +9,7 @@ interface Props {
 	menu: ISidebarItem[];
 }
 
-export function SidebarMenu({ menu, title }: Props) {
+export function SidebarMenu({ menu, title}: Props) {
 	const pathname = usePathname();
 	return (
 		<nav>
