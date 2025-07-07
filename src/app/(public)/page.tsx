@@ -6,7 +6,7 @@ import { Flame, FlameIcon } from 'lucide-react';
 import { VideoItem } from '@/ui/video-item/VideoItem';
 
 import { videoService } from '@/services/video.service';
-import { Explore } from '@/app/explore/Explore';
+import { Explore } from '@/app/(public)/explore/Explore';
 import { Heading } from '@/ui/heading/Heading';
 
 export default function Home() {

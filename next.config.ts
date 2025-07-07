@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
 		return [
 			{
 				source: '/uploads/:path*',
-				destination: `${process.env.SERVER_URL}/uploads/:path*`,
+				destination: `${process.env.NEXT_SERVER_URL}/uploads/:path*`,
 			},
 		];
 	},

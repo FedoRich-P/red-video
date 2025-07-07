@@ -6,10 +6,25 @@ import { redirectToLogin } from './utils/redirect-to-login'
 
 export async function protectStudio(request: NextRequest) {
 	const tokens = await getTokensFromRequest(request)
-	if (!tokens) return redirectToLogin(request)
 
-	const verifiedData = await jwtVerifyServer(tokens.accessToken)
-	if (!verifiedData) return redirectToLogin(request)
+	// Нет accessToken и refreshToken — редирект
+	if (!tokens?.accessToken && !tokens?.refreshToken) {
+		return redirectToLogin(request)
+	}
 
-	return NextResponse.next()
+	// accessToken есть — проверим его
+	if (tokens.accessToken) {
+		const verifiedData = await jwtVerifyServer(tokens.accessToken)
+		if (verifiedData) {
+			return NextResponse.next()
+		}
+	}
+
+	//  accessToken невалидный, но refreshToken есть — пустим, а клиент обновит
+	if (tokens.refreshToken) {
+		return NextResponse.next()
+	}
+
+	//  Вообще ничего нет
+	return redirectToLogin(request)
 }

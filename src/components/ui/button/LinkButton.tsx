@@ -10,7 +10,7 @@ interface Props extends TLink {
 export function LinkButton({ children, ...props }: Props) {
 	return (
 		<Link
-			className="py-2 px-5 flex items-center gap-3 bg-[var(--primary-color)] text-white font-semibold rounded hover:bg-red-400 transition-colors disabled:bg-gray-400"
+			className="py-2 px-5 flex items-center gap-3 bg-primary text-white font-semibold rounded hover:bg-red-400 transition-colors disabled:bg-gray-400"
 			{...props}>
 			{children}
 		</Link>
