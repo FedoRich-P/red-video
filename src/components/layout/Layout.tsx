@@ -12,13 +12,21 @@ import styles from './Layout.module.scss';
 
 export function Layout({ children }: PropsWithChildren<unknown>) {
 	const [isShowedSidebar, setIsShowedSidebar] = useState(true);
+	const [isReady, setIsReady] = useState(false);
 
 	const toggleSidebar = () => {
 		setIsShowedSidebar((prev) => !prev);
 	};
+
 	useEffect(() => {
-		authService.initializeAuth();
+		const init = async () => {
+			await authService.initializeAuth();
+			setIsReady(true);
+		};
+		init();
 	}, []);
+
+	if (!isReady) return null;
 
 	return (
 		<div
@@ -26,7 +34,7 @@ export function Layout({ children }: PropsWithChildren<unknown>) {
 				'flex min-h-screen',
 				isShowedSidebar ? styles.showedSidebar : styles.hidedSidebar,
 			)}>
-			<Sidebar toggleSidebar={toggleSidebar} />
+			<Sidebar toggleSidebar={toggleSidebar} isShowedSidebar={isShowedSidebar} />
 			<Content>{children}</Content>
 		</div>
 	);

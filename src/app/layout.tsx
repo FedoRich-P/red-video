@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { Noto_Sans } from 'next/font/google';
 import { ReactNode } from 'react';
 
-import { Layout } from '@/components/layout/Layout';
-
 import { Providers } from '@/providers/Providers';
 
 import './globals.css';
@@ -22,9 +20,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
 	return (
 		<html lang="en">
 			<body
-				className={`${notoSans.className} bg-[var(--bg-color)] text-[var(--text-color)] text-base`}>
+				className={`${notoSans.className} bg-bg text-textColor text-base`}>
 				<Providers>
-					<Layout>{children}</Layout>
+					{children}
 				</Providers>
 			</body>
 		</html>

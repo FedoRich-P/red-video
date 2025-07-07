@@ -42,9 +42,9 @@ export function Auth() {
 	}, [accessToken, router])
 
 	return (
-		<div className="w-full h-full flex justify-center items-center">
+		<div className="w-screen h-screen flex justify-center items-center">
 			<div className="w-1/5 p-7 border-[var(--border-color)] border rounded">
-				<div className="text-center mb-1">
+				<div className="mb-1">
 					<Logo />
 				</div>
 
