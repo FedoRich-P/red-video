@@ -10,9 +10,12 @@ import { PAGE } from '@/config/public-page.config'
 
 import type { IAuthData, IAuthForm } from './auth-form.types'
 import { authService } from '@/services/auth.service'
+import {useAppDispatch} from "@/store/hooks";
+import {clearAuthData} from "@/store/authSlice";
 
 export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAuthForm>) {
 	const router = useRouter()
+	const dispatch = useAppDispatch()
 
 	const [isPending, startTransition] = useTransition()
 
@@ -45,6 +48,7 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 			},
 			error: (e: Error) => {
 				if (axios.isAxiosError(e)) {
+					dispatch(clearAuthData())
 					return e.response?.data?.message
 				}
 			}

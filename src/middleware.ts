@@ -5,8 +5,7 @@ import { STUDIO_PAGE } from './config/studio-page'
 import { protectStudio } from '@/server-actions/middlewares/prorect-studio.middleware';
 import { protectLoginPages } from '@/server-actions/middlewares/prorect-login.middleware';
 
-
-export async function middleware(request: NextRequest, response: NextResponse) {
+export async function middleware(request: NextRequest) {
 	const url = new URL(request.url)
 	const pathname = url.pathname
 

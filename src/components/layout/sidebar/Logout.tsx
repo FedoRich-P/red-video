@@ -1,38 +1,38 @@
-'use client';
+import { useMutation } from '@tanstack/react-query'
+import { LogOut } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 
-import { useMutation } from '@tanstack/react-query';
+import { PAGE } from '@/config/public-page.config'
+import { STUDIO_PAGE } from '@/config/studio-page'
 
-import { authService } from '@/services/auth.service';
-import { LogOut } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useAppSelector } from '@/store/hooks';
-import { selectIsLoggedIn } from '@/store/authSlice';
+import { authService } from '@/services/auth.service'
+// import { useTypedSelector } from '@/store'
 
 export function Logout() {
-	const [isClient, setIsClient] = useState(false);
+	const router = useRouter()
+	const pathname = usePathname()
 
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['logout'],
 		mutationFn: () => authService.logout(),
-	});
+		onSuccess: () => {
+			if (pathname.includes(STUDIO_PAGE.HOME) || pathname.includes(STUDIO_PAGE.SETTINGS)) {
+				router.push(PAGE.HOME)
+			}
+		}
+	})
 
-	const isLoggedIn = useAppSelector(selectIsLoggedIn);
+	// const { isLoggedIn } = useTypedSelector(state => state.auth)
 
-	useEffect(() => {
-		setIsClient(true);
-	}, []);
-
-	if (!isClient || !isLoggedIn) {
-		return null;
-	}
+	// if (!isLoggedIn) return null
 
 	return (
-		<button onClick={()=> mutate()} className="group py-3 flex items-center gap-5 transition-all duration-300 relative">
-			<LogOut className="group-hover:text-[var(--primary-color)] transition-transform text-inherit group-hover:rotate-6 min-w-6" />
-			<span className="relative text-inherit">
-				{isPending ? 'Please wait...' : 'Logout'}
-				<span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-[var(--primary-color)] transition-all duration-600 group-hover:w-full block"></span>
-			</span>
+		<button
+			onClick={() => mutate()}
+			className={'group py-3 flex items-center gap-5'}
+		>
+			<LogOut className={'min-w-6 group-hover:text-primary transition group-hover:rotate-6'} />
+			<span>{isPending ? 'Please wait...' : 'Logout'}</span>
 		</button>
-	);
+	)
 }

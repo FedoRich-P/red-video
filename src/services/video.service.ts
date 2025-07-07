@@ -26,8 +26,8 @@ class VideoService {
 		return axiosClassic.get<Explore>(`/videos`, searchTerm ? {params: {searchTerm}} : {});
 	}
 
-	getGamesVideos() {
-		return axiosClassic.get<Explore>(`/videos/games`);
+	getVideoGames() {
+		return axiosClassic.get<IVideo[]>(`/videos/games`)
 	}
 
 	getTrendingVideos() {

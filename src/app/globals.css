@@ -8,6 +8,13 @@
     --sidebar-width: 15rem;
 }
 
+@theme {
+    --color-primary: #ad2528;
+    --color-bg: #191b28;
+    --color-textColor: #fff;
+    --color-border: #2a3439;
+}
+
 @layer utilities {
     .shadow-gradient {
         @apply border-b-2 border-transparent transition-all duration-300 ease-in-out;

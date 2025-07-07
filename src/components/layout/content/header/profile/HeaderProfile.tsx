@@ -1,33 +1,32 @@
-import { LogIn } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import {LogIn} from 'lucide-react';
 
-import { HeaderAvatar } from '@/components/layout/content/header/profile/HeaderAvatar';
+import {HeaderAvatar} from '@/components/layout/content/header/profile/HeaderAvatar';
 
-import { LinkButton } from '@/ui/button/LinkButton';
+import {LinkButton} from '@/ui/button/LinkButton';
 
-import { PAGE } from '@/config/public-page.config';
+import {PAGE} from '@/config/public-page.config';
 
-import { selectIsLoggedIn } from '@/store/authSlice';
-import { useAppSelector } from '@/store/hooks';
+import {selectIsLoggedIn} from '@/store/authSlice';
+import {useAppSelector} from '@/store/hooks';
+import {useProfile} from "@/hooks/useProfile";
+import {SkeletonLoader} from "@/ui/skeleton-loader/SkeletonLoader";
 
 export function HeaderProfile() {
-	const [isClient, setIsClient] = useState(false);
-	const isLoggedIn = useAppSelector(selectIsLoggedIn);
+    const { profile, isLoading } = useProfile()
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-	useEffect(() => {
-		setIsClient(true);
-	}, []);
+    if (isLoading) return <SkeletonLoader className={'w-8 h-8 mb-0 rounded-lg'}/>
 
-	if (!isClient) {
-		return null;
-	}
+    if (!isLoggedIn || !profile) {
+        return (
+            <LinkButton href={PAGE.AUTH}>
+                <LogIn />
+                Auth
+            </LinkButton>
+        )
+    }
 
-	return isLoggedIn ? (
-		<HeaderAvatar />
-	) : (
-		<LinkButton href={PAGE.AUTH}>
-			<LogIn />
-			Auth
-		</LinkButton>
-	);
+    return <HeaderAvatar profile={profile} />
 }
+
+export default HeaderProfile

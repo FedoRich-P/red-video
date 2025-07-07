@@ -6,7 +6,7 @@ import type { IAuthData } from '@/app/auth/auth-form.types'
 import { store } from '@/store'
 import { EnumTokens } from '@/types/auth.types'
 import type { IUser } from '@/types/user.types'
-import { clearAuthData, setAuthData } from '@/store/authSlice';
+import {clearAuthData, setAuthData} from "@/store/authSlice";
 
 interface IAuthResponse {
 	user: IUser
@@ -17,18 +17,25 @@ class AuthService {
 	private _AUTH = '/auth'
 
 	async main(type: 'login' | 'register', data: IAuthData, recaptchaToken?: string | null) {
-		const response = await axiosClassic.post<IAuthResponse>(`${this._AUTH}/${type}`, data, {
-			headers: {
-				recaptcha: recaptchaToken
+		try {
+			const response = await axiosClassic.post<IAuthResponse>(`${this._AUTH}/${type}`, data, {
+				headers: {
+					recaptcha: recaptchaToken
+				}
+			})
+
+			if (response.data.accessToken) {
+				this._saveTokenStorage(response.data.accessToken)
+				store.dispatch(setAuthData(response.data))
 			}
-		})
 
-		if (response.data.accessToken) {
-			this._saveTokenStorage(response.data.accessToken)
-			store.dispatch(setAuthData(response.data))
+			console.log('response', response.data)
+
+			return response
+		} catch (error: any) {
+			console.error('AuthService error:', error?.response?.data || error)
+			throw error
 		}
-
-		return response
 	}
 
 	async initializeAuth() {
@@ -38,7 +45,6 @@ class AuthService {
 		try {
 			await this.getNewTokens()
 		} catch (error) {
-			console.log(error);
 			store.dispatch(clearAuthData())
 		}
 	}
@@ -82,10 +88,11 @@ class AuthService {
 
 	private _saveTokenStorage(accessToken: string) {
 		Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
-			domain: 'localhost',
+			// domain: 'localhost',
+			//1h
 			expires: 1 / 24,
-			sameSite: 'strict',
-			secure: true
+			// sameSite: 'strict',
+			// secure: true
 		})
 	}
 
