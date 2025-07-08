@@ -1,25 +1,28 @@
 'use client'
 
+import { Controller } from 'react-hook-form'
+
 import { Button } from '@/ui/button/Button'
 import { Field } from '@/ui/field/Field'
+import { Textarea } from '@/ui/field/Textarea'
+import { UploadField } from '@/ui/upload-field/UploadField'
 
 import { useSettings } from './useSettings'
-import {Textarea} from "@/ui/field/Textarea";
-import {SettingsFormSkeleton} from "@/app/studio/settings/SettingsFormSkeleton";
 
 export function SettingsForm() {
     const {
         formObject: {
             handleSubmit,
             register,
-            formState: { errors }
+            formState: { errors },
+            control
         },
         isLoading,
         isProfileLoading,
         onSubmit
     } = useSettings()
 
-    if (isProfileLoading) return <SettingsFormSkeleton />
+    if (isProfileLoading) return <div>Loading...</div>
 
     return (
         <div className='w-3/5'>
@@ -36,8 +39,8 @@ export function SettingsForm() {
                         <Field
                             label='Password'
                             type='password'
-                            registration={register('password', { required: 'Password is required!' })}
-                            error={errors?.password?.message}
+                            registration={register('password')}
+                            error={errors.password?.message}
                             placeholder='Enter password:'
                         />
                         <Field
@@ -63,9 +66,40 @@ export function SettingsForm() {
                         />
                     </div>
 
-                    <div></div>
+                    <div>
+                        <Controller
+                            control={control}
+                            name='channel.avatarUrl'
+                            render={({ field: { onChange, value }, fieldState: { error } }) => (
+                                <UploadField
+                                    label='Avatar:'
+                                    onChange={onChange}
+                                    value={value}
+                                    error={error}
+                                    folder='avatars'
+                                    className='mb-5'
+                                />
+                            )}
+                        />
+
+                        <Controller
+                            control={control}
+                            name='channel.bannerUrl'
+                            render={({ field: { onChange, value }, fieldState: { error } }) => (
+                                <UploadField
+                                    label='Banner:'
+                                    onChange={onChange}
+                                    value={value}
+                                    error={error}
+                                    folder='banners'
+                                    aspectRation='16:9'
+                                    overlay='/overlay.png'
+                                />
+                            )}
+                        />
+                    </div>
                 </div>
-                <div className='text-center mt-4'>
+                <div className='text-center mt-10'>
                     <Button
                         type='submit'
                         isLoading={isLoading}
